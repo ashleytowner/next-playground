@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @apply dark:bg-slate-800 dark:text-slate-100 bg-slate-100 text-slate-800;
+}
+
+.card {
+  @apply bg-slate-200 dark:bg-slate-700 m-1 p-2 rounded border-slate-300 dark:border-slate-600 border-2;
+}
+
+input {
+  @apply card;
+}
+
+table {
+    @apply card;
+
+    td, th {
+      @apply p-2;
+    }
+
+    tbody {
+      tr:nth-child(2n - 1) {
+        @apply bg-slate-300 dark:bg-slate-600;
+      }
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+}
+
+h1 {
+  @apply text-5xl;
+}
+
+h2 {
+  @apply text-4xl;
+}
+
+h3 {
+  @apply text-3xl;
+}
+
+h4 {
+  @apply text-2xl;
+}
+
+h5 {
+  @apply text-xl;
+}
+
+h6 {
+  @apply text-lg;
+}
+
+form label {
+  @apply font-semibold;
+  &::after {
+    content: ':';
+  }
+}
+
+
