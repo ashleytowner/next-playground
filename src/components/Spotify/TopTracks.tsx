@@ -2,34 +2,64 @@
 'use client';
 
 import useFetch from '@/hooks/useFetch';
+import { authSchema, spotifyTrack } from '@/lib/zod/spotify';
+import { z } from 'zod';
+import PlayableAlbumArt from './PlayableAlbumArt';
+import { useMemo } from 'react';
 
-export default function TopTracks() {
-	const { loading, data: topTracks } = useFetch(
-		'http://localhost:3000/api/spotify/top-tracks'
+const schema = z.object({ items: z.array(spotifyTrack) });
+
+type TopTracksProps = {
+	auth: z.infer<typeof authSchema>;
+}
+
+export default function TopTracks({ auth }: TopTracksProps) {
+	const requestData = useMemo(() => {
+		return {
+			headers: {
+				Authorization: `Bearer ${auth.access_token}`,
+			},
+		};
+	}, [auth]);
+	const { loading, data: topTracks, error } = useFetch(
+		schema,
+		'https://api.spotify.com/v1/me/top/tracks',
+		requestData
 	);
+
 	if (loading) {
-		return <p>Loading...</p>
+		return <p>Loading...</p>;
 	}
+
+	if (typeof topTracks === 'undefined' || error) {
+		return <p>There was an error fetching your data</p>;
+	}
+
 	return (
-		<div>
-			{topTracks.items.map((track: any) => {
-				return (
-					<div className="flex gap-5 m-2 items-center" key={track.id}>
-						{track.album.images?.[0] && (
-							<img
-								alt="track image"
+		<table className="m-auto">
+			<thead>
+				<tr>
+					<th>Album Art</th>
+					<th>Song</th>
+					<th>Album</th>
+					<th>Artists</th>
+				</tr>
+			</thead>
+			<tbody>
+				{topTracks.items.map((track) => (
+					<tr key={track.name}>
+						<td>
+							<PlayableAlbumArt
 								src={track.album.images[0].url}
-								width={50}
-								height={50}
+								url={track.external_urls.spotify}
 							/>
-						)}
-						<span>{track.name}</span>
-						<span>
-							{track.artists.map((artist: any) => artist.name).join(' ')}
-						</span>
-					</div>
-				);
-			})}
-		</div>
+						</td>
+						<td>{track.name}</td>
+						<td>{track.album.name}</td>
+						<td>{track.artists.map((artist) => artist.name).join(', ')}</td>
+					</tr>
+				))}
+			</tbody>
+		</table>
 	);
 }

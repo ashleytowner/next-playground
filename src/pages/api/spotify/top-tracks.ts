@@ -1,16 +1,16 @@
 import { getTopTracks } from '@/lib/spotify';
+import { spotifyTrack } from '@/lib/zod/spotify';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { z } from 'zod';
 
-export default async function getTopTracksHandler(_: any, res: any) {
-  const response = await getTopTracks();
-  const { items } = await response;
+export default async function getTopTracksHandler(req: NextApiRequest, res: NextApiResponse) {
+  const [status, response] = await getTopTracks();
 
-  // const tracks: any = items.slice(0, 10).map((track: any) => {
-  //   return {
-  //     artist: track.artists.join(', '),
-  //     songUrl: track.external_urls.spotify,
-  //     title: track.name,
-  //   };
-  // });
+  const schema = z.object({
+    items: z.array(spotifyTrack)
+  })
 
-  return res.status(200).json({ items });
+  const data = schema.parse(response);
+
+  res.status(status).json(data)
 }

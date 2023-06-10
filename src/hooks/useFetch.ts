@@ -1,20 +1,41 @@
 import { useEffect, useState } from 'react';
+import { ZodSchema, z } from 'zod';
 
-export default function useFetch<T = any>(url: string) {
-  const [data, setData] = useState<T | undefined>();
+export default function useFetch<S extends ZodSchema = any>(
+  schema: S | undefined,
+  input: Parameters<(typeof fetch)>[0],
+  init?: Parameters<(typeof fetch)>[1]
+): { data: z.infer<S> | undefined; loading: boolean; error: boolean; } {
+  const [data, setData] = useState<z.infer<S> | undefined>();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     async function fetchData() {
-      return fetch(url).then(async (res) => {
+      return fetch(input, init).then(async (res) => {
         const jsonData = await res.json();
-        setData(jsonData as T);
+        if (!res.ok) {
+          setError(true);
+          setData(jsonData);
+          return;
+        }
+        if (schema) {
+          const result = schema.safeParse(jsonData);
+          if (!result.success) {
+            setData(undefined);
+            setError(true);
+          } else {
+            setData(result.data);
+          }
+        } else {
+          setData(jsonData);
+        }
         setLoading(false);
       });
     }
     fetchData();
-  }, [setLoading, setData, url]);
+  }, [setLoading, setData, init, input, schema]);
 
-  return { data, loading };
+  return { data, loading, error };
 }

@@ -2,7 +2,6 @@ import querystring from 'querystring';
 
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 
 const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
@@ -54,8 +53,24 @@ export function getAuthorizationURL() {
   return `${authorizeEndpoint}?${parameters.toString()}`;
 }
 
+export async function getRefreshToken(code: string) {
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${basic}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: querystring.stringify({
+      grant_type: 'authorization_code',
+      code,
+      redirect_uri: 'http://localhost:3000/spotify/callback'
+    }),
+  });
+
+  return [response.status, await response.json()] as const;
+}
+
 export async function getAccessToken() {
-  console.log('refresh token:', refreshToken);
   const response = await fetch(TOKEN_ENDPOINT, {
     method: 'POST',
     headers: {
@@ -68,7 +83,7 @@ export async function getAccessToken() {
     }),
   });
 
-  return await response.json() as { 
+  return await response.json() as {
     access_token: string;
     expires_in: number;
     token_type: 'Bearer';
@@ -79,9 +94,7 @@ export async function getAccessToken() {
 const TOP_TRACKS_ENDPOINT = 'https://api.spotify.com/v1/me/top/tracks';
 
 export async function getTopTracks() {
-  const x = await getAccessToken();
-  const access_token = x.access_token;
-  console.log('access token', x);
+  const { access_token } = await getAccessToken();
 
   const result = await fetch(TOP_TRACKS_ENDPOINT, {
     headers: {
@@ -89,5 +102,17 @@ export async function getTopTracks() {
     },
   });
 
-  return await result.json();
+  return [result.status, await result.json()] as const;
+}
+
+export async function getRecommendations() {
+  const { access_token } = await getAccessToken();
+
+  const result = await fetch('https://api.spotify.com/v1/recommendations?seed_genres=punk', {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+
+  return [result.status, await result.json()] as const;
 }

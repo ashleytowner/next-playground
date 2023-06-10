@@ -1,4 +1,5 @@
-import TopTracks from '@/components/Spotify/TopTracks';
+import SpotifyInsights from '@/components/Spotify/SpotifyInsights';
+import SpotifyAuth from '@/components/Spotify/SpotifyLogin';
 import { getAuthorizationURL } from '@/lib/spotify';
 
 export const metadata = {
@@ -10,13 +11,8 @@ export default async function SpotifyPage() {
 	return (
 		<>
 			<h1>Spotify Insights</h1>
-			<p>
-				To authorize with spotify, click{' '}
-				<a href={getAuthorizationURL()}>this link</a>
-			</p>
-			<h2>Top Tracks</h2>
-			<TopTracks />
-			<h2>Recommendations</h2>
+      <SpotifyAuth url={getAuthorizationURL()} />
+      <SpotifyInsights />
 		</>
 	);
 }
