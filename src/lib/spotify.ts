@@ -46,7 +46,7 @@ export function getAuthorizationURL() {
   const parameters = new URLSearchParams({
     client_id: clientId,
     response_type: 'code',
-    redirect_uri: `${process.env.BASE_URL}/spotify/callback`,
+    redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/spotify/callback`,
     scope: scopes.join(' '),
   });
   return `${authorizeEndpoint}?${parameters.toString()}`;
@@ -62,7 +62,23 @@ export async function getRefreshToken(code: string) {
     body: querystring.stringify({
       grant_type: 'authorization_code',
       code,
-      redirect_uri: `${process.env.BASE_URL}/spotify/callback`
+      redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/spotify/callback`
+    }),
+  });
+
+  return [response.status, await response.json()] as const;
+}
+
+export async function refresh(refreshToken: string) {
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${basic}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: querystring.stringify({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
     }),
   });
 

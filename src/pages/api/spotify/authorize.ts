@@ -1,4 +1,4 @@
-import { getRefreshToken } from '@/lib/spotify';
+import { getRefreshToken, refresh } from '@/lib/spotify';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 
@@ -6,13 +6,27 @@ export default async function authorize(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const bodySchema = z.object({
-    code: z.string()
-  })
+  const bodySchema = z
+    .object({
+      code: z.string(),
+    })
+    .or(
+      z.object({
+        refresh_token: z.string(),
+      })
+    );
 
-  const { code } = bodySchema.parse(JSON.parse(req.body));
+  const body = bodySchema.parse(JSON.parse(req.body));
 
-  const [status, data] = await getRefreshToken(code);
+  let status: number;
+  let data: any;
+
+  if ('code' in body) {
+    [status, data] = await getRefreshToken(body.code);
+  } else {
+    [status, data] = await refresh(body.refresh_token);
+  }
+
 
   res.status(status).send(data);
 }
