@@ -5,8 +5,6 @@ import TopTracks from './TopTracks';
 import { useMemo } from 'react';
 
 export default function SpotifyInsights() {
-  console.count('render');
-
   const authData = useMemo(() => {
     const storageItem = localStorage.getItem('spotify_auth');
     if (!storageItem) {
