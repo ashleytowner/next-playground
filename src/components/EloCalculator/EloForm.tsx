@@ -26,7 +26,7 @@ export default function EloForm(props: EloFormProps) {
 		<form>
 			<fieldset className="flex w-full">
 				<p className="w-1/2 p-1">
-					<label htmlFor="elo_1">Elo 1</label>
+					<label htmlFor="elo_1">Your Elo</label>
 					<input
 						className="w-full"
 						type="number"
@@ -39,7 +39,7 @@ export default function EloForm(props: EloFormProps) {
 					/>
 				</p>
 				<p className="w-1/2 p-1">
-					<label htmlFor="elo_2">Elo 2</label>
+					<label htmlFor="elo_2">Opponent&apos;s Elo</label>
 					<input
 						className="w-full"
 						type="number"

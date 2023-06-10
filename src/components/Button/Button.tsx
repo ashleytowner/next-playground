@@ -3,7 +3,13 @@ import classnames from '@/lib/classnames';
 import { MouseEventHandler, ReactNode } from 'react';
 
 type ButtonProps = {
-	variant?: 'default' | 'primary' | 'success' | 'destructive' | 'bare';
+	variant?:
+	| 'default'
+	| 'primary'
+	| 'secondary'
+	| 'success'
+	| 'destructive'
+	| 'bare';
 	children: ReactNode;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 };
@@ -16,32 +22,39 @@ export default function Button(props: ButtonProps) {
 	const classes = classnames({
 		'active:bg-green-600': variant === 'success',
 		'active:bg-primary-600': variant === 'primary',
+		'active:bg-secondary-600': variant === 'secondary',
 		'active:bg-red-600': variant === 'destructive',
 		'active:bg-slate-300': variant === 'default',
 		'bg-green-500': variant === 'success',
 		'bg-primary-500': variant === 'primary',
+		'bg-secondary-500': variant === 'secondary',
 		'bg-red-500': variant === 'destructive',
 		'bg-slate-200': variant === 'default',
 		border: variant !== 'bare',
 		'border-green-600': variant === 'success',
 		'border-primary-600': variant === 'primary',
+		'border-secondary-600': variant === 'secondary',
 		'border-red-600': variant === 'destructive',
 		'border-slate-300': variant === 'default',
 		'dark:active:bg-slate-600': variant === 'default',
 		'dark:bg-green-700': variant === 'success',
 		'dark:bg-primary-700': variant === 'primary',
+		'dark:bg-secondary-700': variant === 'secondary',
 		'dark:bg-red-700': variant === 'destructive',
 		'dark:bg-slate-700': variant === 'default',
 		'dark:border-green-600': variant === 'success',
 		'dark:border-primary-500': variant === 'primary',
+		'dark:border-secondary-500': variant === 'secondary',
 		'dark:border-red-500': variant === 'destructive',
 		'dark:border-slate-600': variant === 'default',
 		'dark:hover:border-green-500': variant === 'success',
 		'dark:hover:border-primary-300': variant === 'primary',
+		'dark:hover:border-secondary-300': variant === 'secondary',
 		'dark:hover:border-red-300': variant === 'destructive',
 		'dark:hover:text-primary-300': variant === 'bare',
 		'hover:border-green-900': variant === 'success',
 		'hover:border-primary-900': variant === 'primary',
+		'hover:border-secondary-900': variant === 'secondary',
 		'hover:border-red-900': variant === 'destructive',
 		'hover:border-slate-400': variant === 'default',
 		'hover:text-primary-700': variant === 'bare',
@@ -51,6 +64,7 @@ export default function Button(props: ButtonProps) {
 		'text-primary-500': variant === 'bare',
 		'text-white':
 			variant === 'primary' ||
+			variant === 'secondary' ||
 			variant === 'success' ||
 			variant === 'destructive',
 	});

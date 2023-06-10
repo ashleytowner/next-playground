@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import EloForm, { EloFormValues } from './EloForm';
 import EloTable from './EloTable';
@@ -12,7 +11,6 @@ export default function EloCalculator() {
 	});
 	return (
 		<>
-			<h1>Elo Calculator</h1>
 			<EloForm value={eloFormState} onChange={(e) => setEloFormState(e)} />
 			<EloTable value={eloFormState} />
 		</>
