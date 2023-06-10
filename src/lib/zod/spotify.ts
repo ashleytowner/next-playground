@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const authSchema = z.object({
   access_token: z.string(),
@@ -6,6 +6,10 @@ export const authSchema = z.object({
   expires_in: z.number(),
   refresh_token: z.string(),
 });
+
+export const authSchemaWithExpiry = authSchema.and(
+  z.object({ exp: z.number() })
+);
 
 export const spotifyImage = z.object({
   height: z.number(),
@@ -15,13 +19,13 @@ export const spotifyImage = z.object({
 
 export const spotifyArtist = z.object({
   external_urls: z.object({
-    spotify: z.string()
+    spotify: z.string(),
   }),
   href: z.string(),
   id: z.string(),
   name: z.string(),
   type: z.string(),
-  uri: z.string()
+  uri: z.string(),
 });
 
 export const spotifyAlbum = z.object({
@@ -29,7 +33,7 @@ export const spotifyAlbum = z.object({
   artists: z.array(spotifyArtist),
   available_markets: z.array(z.string()),
   external_urls: z.object({
-    spotify: z.string()
+    spotify: z.string(),
   }),
   href: z.string(),
   id: z.string(),
@@ -39,7 +43,7 @@ export const spotifyAlbum = z.object({
   release_date_precision: z.string(),
   total_tracks: z.number(),
   type: z.string(),
-  uri: z.string()
+  uri: z.string(),
 });
 
 export const spotifyTrack = z.object({
@@ -50,10 +54,10 @@ export const spotifyTrack = z.object({
   duration_ms: z.number(),
   explicit: z.boolean(),
   external_ids: z.object({
-    isrc: z.string()
+    isrc: z.string(),
   }),
   external_urls: z.object({
-    spotify: z.string()
+    spotify: z.string(),
   }),
   href: z.string(),
   id: z.string(),
@@ -63,5 +67,5 @@ export const spotifyTrack = z.object({
   preview_url: z.string().nullable(),
   track_number: z.number(),
   type: z.string(),
-  uri: z.string()
+  uri: z.string(),
 });

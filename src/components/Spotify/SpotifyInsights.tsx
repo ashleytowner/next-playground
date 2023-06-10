@@ -1,5 +1,5 @@
 'use client';
-import { authSchema } from '@/lib/zod/spotify';
+import { authSchema, authSchemaWithExpiry } from '@/lib/zod/spotify';
 import Recommendations from './Recommendations';
 import TopTracks from './TopTracks';
 import { useMemo } from 'react';
@@ -12,7 +12,7 @@ export default function SpotifyInsights() {
     if (!storageItem) {
       return null
     }
-    return authSchema.safeParse(JSON.parse(storageItem));
+    return authSchemaWithExpiry.safeParse(JSON.parse(storageItem));
   }, []);
 
   if (authData === null || !authData.success) {

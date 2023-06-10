@@ -2,7 +2,7 @@
 'use client';
 
 import useFetch from '@/hooks/useFetch';
-import { authSchema, spotifyTrack } from '@/lib/zod/spotify';
+import { authSchemaWithExpiry, spotifyTrack } from '@/lib/zod/spotify';
 import { z } from 'zod';
 import PlayableAlbumArt from './PlayableAlbumArt';
 import { useMemo } from 'react';
@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 const schema = z.object({ items: z.array(spotifyTrack) });
 
 type TopTracksProps = {
-	auth: z.infer<typeof authSchema>;
+	auth: z.infer<typeof authSchemaWithExpiry>;
 }
 
 export default function TopTracks({ auth }: TopTracksProps) {

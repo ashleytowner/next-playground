@@ -1,7 +1,7 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 import useFetch from '@/hooks/useFetch';
-import { authSchema, spotifyTrack } from '@/lib/zod/spotify';
+import { authSchemaWithExpiry, spotifyTrack } from '@/lib/zod/spotify';
 import { z } from 'zod';
 import PlayableAlbumArt from './PlayableAlbumArt';
 import { useMemo } from 'react';
@@ -9,7 +9,7 @@ import { useMemo } from 'react';
 const schema = z.object({ tracks: z.array(spotifyTrack) });
 
 type RecommendationsProps = {
-  auth: z.infer<typeof authSchema>;
+  auth: z.infer<typeof authSchemaWithExpiry>;
 };
 
 export default function Recommendations({ auth }: RecommendationsProps) {

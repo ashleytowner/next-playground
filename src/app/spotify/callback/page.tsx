@@ -4,6 +4,9 @@ import { authSchema } from '@/lib/zod/spotify';
 import { useEffect, useMemo } from 'react';
 import { z } from 'zod';
 
+function calculateExpiry(inSeconds: number) {
+  return Date.now() + inSeconds * 1000;
+}
 
 export default function SpotifyCallbackPage(props: unknown) {
   const schema = z.object({
@@ -24,14 +27,20 @@ export default function SpotifyCallbackPage(props: unknown) {
 
   const { data, loading, error } = useFetch(
     undefined,
-    'http://localhost:3000/api/spotify/authorize',
+    `${process.env.BASE_URL}/api/spotify/authorize`,
     requestData
   );
 
   useEffect(() => {
     const tokenData = authSchema.safeParse(data);
     if (tokenData.success) {
-      localStorage.setItem('spotify_auth', JSON.stringify(tokenData.data));
+      localStorage.setItem(
+        'spotify_auth',
+        JSON.stringify({
+          ...tokenData.data,
+          exp: calculateExpiry(tokenData.data.expires_in),
+        })
+      );
     } else {
       localStorage.removeItem('spotify_auth');
     }
@@ -48,7 +57,7 @@ export default function SpotifyCallbackPage(props: unknown) {
   return (
     <h1 className="dark:text-green-200 text-green-800">
       Successfully Authenticated With Spotify
-      {window.location.href = '/spotify'}
+      {(window.location.href = '/spotify')}
     </h1>
   );
 }
