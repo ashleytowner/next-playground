@@ -10,21 +10,21 @@ body {
 	@apply dark:bg-slate-800 dark:text-slate-100 bg-slate-100 text-slate-800;
 }
 
-main {
-	max-width: 90rem;
-	margin: auto;
-}
-
 .card {
 	@apply bg-slate-200 dark:bg-slate-700 m-1 p-2 rounded border-slate-300 dark:border-slate-600 border-2;
 }
 
-input, select {
+input,
+select {
 	@apply card;
 }
 
 table {
 	@apply card w-11/12;
+
+	tr {
+		@apply flex flex-col md:table-row;
+	}
 
 	td,
 	th {

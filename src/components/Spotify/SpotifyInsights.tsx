@@ -1,4 +1,5 @@
 'use client';
+import './SpotifyInsights.scss';
 import { authSchemaWithExpiry } from '@/lib/zod/spotify';
 import Recommendations from './Recommendations';
 import TopTracks from './TopTracks';

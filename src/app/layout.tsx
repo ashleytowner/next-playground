@@ -11,7 +11,7 @@ export default function RootLayout(props: RootLayoutProps) {
 		<html lang="en">
 			<body>
 				<NavBar client-only />
-				<main className="p-2">{props.children}</main>
+				<main className="p-2 w-full lg:w-10/12 xl:w-8/12 m-auto">{props.children}</main>
 				<div id="portal-root"></div>
 			</body>
 		</html>
