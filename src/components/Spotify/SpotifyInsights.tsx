@@ -1,28 +1,36 @@
 'use client';
-import { authSchema, authSchemaWithExpiry } from '@/lib/zod/spotify';
+import { authSchemaWithExpiry } from '@/lib/zod/spotify';
 import Recommendations from './Recommendations';
 import TopTracks from './TopTracks';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
+import { z } from 'zod';
 
 export default function SpotifyInsights() {
-  const authData = useMemo(() => {
-    const storageItem = localStorage.getItem('spotify_auth');
-    if (!storageItem) {
-      return null
-    }
-    return authSchemaWithExpiry.safeParse(JSON.parse(storageItem));
-  }, []);
+	const [authData, setAuthData] =
+		useState<z.infer<typeof authSchemaWithExpiry>>();
 
-  if (authData === null || !authData.success) {
-    return null;
-  }
+	useEffect(() => {
+		const storageItem =
+			typeof localStorage !== 'undefined'
+				? localStorage.getItem('spotify_auth')
+				: null;
+		if (storageItem) {
+			try {
+				setAuthData(authSchemaWithExpiry.parse(JSON.parse(storageItem)));
+			} catch {
+				setAuthData(undefined);
+			}
+		}
+	}, [setAuthData]);
 
-  return (
-    <>
-      <h2>Top Tracks</h2>
-      <TopTracks auth={authData.data} />
-      <h2>Recommendations</h2>
-      <Recommendations auth={authData.data} />
-    </>
-  );
+	if (!authData) return null;
+
+	return (
+		<>
+			<h2>Top Tracks</h2>
+			<TopTracks auth={authData} />
+			<h2>Recommendations</h2>
+			<Recommendations auth={authData} />
+		</>
+	);
 }

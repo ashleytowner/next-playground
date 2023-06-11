@@ -11,7 +11,7 @@ export default async function SpotifyPage() {
 	return (
 		<>
 			<h1>Spotify Insights</h1>
-      <SpotifyAuth client-only url={getAuthorizationURL()} />
+      <SpotifyAuth url={getAuthorizationURL()} />
       <SpotifyInsights client-only />
 		</>
 	);
