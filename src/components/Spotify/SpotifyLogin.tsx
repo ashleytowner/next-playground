@@ -3,6 +3,7 @@ import { authSchemaWithExpiry } from '@/lib/zod/spotify';
 import Button from '../Button/Button';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
 
 type SpotifyAuthProps = {
 	url: string;
@@ -11,6 +12,9 @@ type SpotifyAuthProps = {
 export default function SpotifyAuth({ url }: SpotifyAuthProps) {
 	const [authData, setAuthData] =
 		useState<z.infer<typeof authSchemaWithExpiry>>();
+
+	const router = useRouter();
+
 	useEffect(() => {
 		const storageItem =
 			typeof localStorage !== 'undefined'
@@ -27,12 +31,12 @@ export default function SpotifyAuth({ url }: SpotifyAuthProps) {
 
 	useEffect(() => {
 		if (authData && authData.exp < Date.now()) {
-			window.location.href = '/spotify/callback';
+			router.push('/spotify/callback');
 		}
-	}, [authData]);
+	}, [authData, router]);
 
 	const handleClick = () => {
-		window.location.href = url;
+		router.push(url);
 	};
 
 	return (

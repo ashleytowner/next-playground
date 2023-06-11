@@ -1,6 +1,7 @@
 'use client';
 import useFetch from '@/hooks/useFetch';
 import { authSchema, authSchemaWithExpiry } from '@/lib/zod/spotify';
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { z } from 'zod';
 
@@ -16,6 +17,8 @@ export default function SpotifyCallbackPage(props: unknown) {
 	});
 	const { searchParams } = schema.parse(props);
 	const { code } = searchParams;
+
+	const router = useRouter();
 
 	const requestData = useMemo(() => {
 		if (code) {
@@ -65,18 +68,23 @@ export default function SpotifyCallbackPage(props: unknown) {
 		}
 	}, [data]);
 
-	if (loading) {
-		return <p>Loading...</p>;
-	}
-
-	if (typeof data === 'undefined' || error) {
-		return <p>There was an error fetching your data</p>;
-	}
+	useEffect(() => {
+		if (!loading && Boolean(data) && !error) {
+			router.push('/spotify');
+		}
+	}, [loading, data, error, router]);
 
 	return (
-		<h1 className="dark:text-green-200 text-green-800">
-			Successfully Authenticated With Spotify
-			{(window.location.href = `/spotify`)}
-		</h1>
+		<>
+			{loading && <p>Loading...</p>}
+			{!loading && Boolean(data) && !error && (
+				<h1 className="dark:text-green-200 text-green-800">
+					Successfully Authenticated With Spotify
+				</h1>
+			)}
+			{!loading && (typeof data === 'undefined' || error) && (
+				<p className="text-red-500">There was an error fetching your data</p>
+			)}
+		</>
 	);
 }
