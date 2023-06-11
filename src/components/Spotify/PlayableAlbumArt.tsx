@@ -1,5 +1,4 @@
 import { Play } from 'lucide-react';
-import './PlayableAlbumArt.scss';
 
 /* eslint-disable @next/next/no-img-element */
 type PlayableAlbumArtProps = {

@@ -1,5 +1,4 @@
 'use client';
-import './SpotifyInsights.scss';
 import { authSchemaWithExpiry } from '@/lib/zod/spotify';
 import Recommendations from './Recommendations';
 import TopTracks from './TopTracks';
@@ -30,14 +29,16 @@ export default function SpotifyInsights() {
   return (
     <>
       <Accordion
-        title="Top Tracks"
-      >
-        <TopTracks auth={authData} />
-      </Accordion>
-      <Accordion
         title="Recommendations"
+        startOpen
       >
         <Recommendations auth={authData} />
+      </Accordion>
+      <Accordion
+        title="Top Tracks"
+        startOpen
+      >
+        <TopTracks auth={authData} />
       </Accordion>
     </>
   );

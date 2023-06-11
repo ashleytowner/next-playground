@@ -22,7 +22,7 @@ body {
 	@apply bg-slate-200 dark:bg-slate-700 p-2 rounded border-slate-300 dark:border-slate-600 border-2;
 }
 
-input,
+input:not([type='checkbox']):not([type='radio']):not([type='range']),
 select {
 	@apply card;
 }

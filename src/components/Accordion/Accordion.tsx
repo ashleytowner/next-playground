@@ -7,6 +7,7 @@ type AccordionProps = {
   title: string;
   level?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onToggle?: (open: boolean) => void;
+  startOpen?: boolean
 };
 
 function Heading(props: Omit<AccordionProps, 'title'>) {
@@ -29,7 +30,7 @@ function Heading(props: Omit<AccordionProps, 'title'>) {
 }
 
 export default function Accordion(props: AccordionProps) {
-  const { children, title, level = 2, onToggle } = props;
+  const { children, title, level = 2, onToggle, startOpen = false } = props;
   const handleToggle = (e: SyntheticEvent<HTMLDetailsElement, Event>) => {
     if (e.target instanceof HTMLDetailsElement) {
       onToggle?.(e.target.open);
@@ -38,7 +39,7 @@ export default function Accordion(props: AccordionProps) {
     }
   }
   return (
-    <details className="accordion" onToggle={handleToggle}>
+    <details className="accordion" onToggle={handleToggle} open={startOpen}>
       <summary>
         <Heading level={level}>{title}</Heading>
         <span className="open-icon">
