@@ -1,4 +1,9 @@
 .spotify {
+	table {
+		tr {
+			@apply flex flex-col md:table-row;
+		}
+	}
 	table tr {
 		@media (max-width: 768px) {
 			display: grid;
