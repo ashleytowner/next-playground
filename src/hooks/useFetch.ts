@@ -3,7 +3,7 @@ import useLazyFetch from './useLazyFetch';
 import { useEffect } from 'react';
 
 export default function useFetch<S extends ZodSchema = any>(
-  schema: S,
+  schema: S | undefined,
   input: Parameters<typeof fetch>[0],
   init?: Parameters<typeof fetch>[1]
 ) {
