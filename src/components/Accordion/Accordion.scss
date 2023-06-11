@@ -1,0 +1,40 @@
+.accordion {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		display: inline;
+	}
+
+  &:not([open]) {
+    .open-icon {
+      display: none;
+    }
+  }
+
+  &[open] {
+    .close-icon {
+      display: none;
+    }
+  }
+
+
+  > summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid;
+    margin: 1rem;
+    cursor: pointer;
+  }
+
+  > summary::marker {
+    content: '';
+  }
+
+  .accordion-body {
+    padding: 1rem;
+  }
+}

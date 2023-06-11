@@ -16,17 +16,24 @@ export default async function authorize(
       })
     );
 
-  const body = bodySchema.parse(JSON.parse(req.body));
+  try {
+    const body = bodySchema.parse(JSON.parse(req.body));
+    let status: number;
+    let data: any;
 
-  let status: number;
-  let data: any;
+    if ('code' in body) {
+      [status, data] = await getRefreshToken(body.code);
+    } else {
+      [status, data] = await refresh(body.refresh_token);
+    }
 
-  if ('code' in body) {
-    [status, data] = await getRefreshToken(body.code);
-  } else {
-    [status, data] = await refresh(body.refresh_token);
+    res.status(status).send(data);
+  } catch (e) {
+    if (e instanceof Error) {
+      console.error(e.message);
+    } else {
+      console.error(e);
+    }
+    res.status(500).send('Something went wrong');
   }
-
-
-  res.status(status).send(data);
 }

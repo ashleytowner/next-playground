@@ -6,6 +6,7 @@ import { authSchemaWithExpiry, spotifyTrack } from '@/lib/zod/spotify';
 import { z } from 'zod';
 import PlayableAlbumArt from './PlayableAlbumArt';
 import { useMemo } from 'react';
+import SongCard from './SongCard';
 
 const schema = z.object({ items: z.array(spotifyTrack) });
 
@@ -36,30 +37,35 @@ export default function TopTracks({ auth }: TopTracksProps) {
 	}
 
 	return (
-		<table className="m-auto">
-			<thead>
-				<tr>
-					<th>Album Art</th>
-					<th>Song</th>
-					<th>Album</th>
-					<th>Artists</th>
-				</tr>
-			</thead>
-			<tbody>
-				{topTracks.items.map((track) => (
-					<tr key={track.name}>
-						<td>
-							<PlayableAlbumArt
-								src={track.album.images[0].url}
-								url={track.external_urls.spotify}
-							/>
-						</td>
-						<td>{track.name}</td>
-						<td>{track.album.name}</td>
-						<td>{track.artists.map((artist) => artist.name).join(', ')}</td>
-					</tr>
-				))}
-			</tbody>
-		</table>
+    <>
+      {topTracks.items.map(track => {
+        return <SongCard key={track.id} track={track} />
+      })}
+    </>
+		// <table className="m-auto">
+		// 	<thead>
+		// 		<tr>
+		// 			<th>Album Art</th>
+		// 			<th>Song</th>
+		// 			<th>Album</th>
+		// 			<th>Artists</th>
+		// 		</tr>
+		// 	</thead>
+		// 	<tbody>
+		// 		{topTracks.items.map((track) => (
+		// 			<tr key={track.name}>
+		// 				<td>
+		// 					<PlayableAlbumArt
+		// 						src={track.album.images[0].url}
+		// 						url={track.external_urls.spotify}
+		// 					/>
+		// 				</td>
+		// 				<td>{track.name}</td>
+		// 				<td>{track.album.name}</td>
+		// 				<td>{track.artists.map((artist) => artist.name).join(', ')}</td>
+		// 			</tr>
+		// 		))}
+		// 	</tbody>
+		// </table>
 	);
 }

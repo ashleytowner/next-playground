@@ -31,8 +31,10 @@ export default function useFetch<S extends ZodSchema = any>(
         } else {
           setData(jsonData);
         }
-        setLoading(false);
-      });
+      }).catch(e => {
+          console.error(e);
+          setError(true);
+      }).finally(() => setLoading(false));
     }
     fetchData();
   }, [setLoading, setData, init, input, schema]);

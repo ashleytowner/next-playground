@@ -6,12 +6,20 @@
 	box-sizing: border-box;
 }
 
+a {
+	text-decoration: underline;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
 body {
 	@apply dark:bg-slate-800 dark:text-slate-100 bg-slate-100 text-slate-800;
 }
 
 .card {
-	@apply bg-slate-200 dark:bg-slate-700 m-1 p-2 rounded border-slate-300 dark:border-slate-600 border-2;
+	@apply bg-slate-200 dark:bg-slate-700 p-2 rounded border-slate-300 dark:border-slate-600 border-2;
 }
 
 input,
