@@ -22,10 +22,6 @@ select {
 table {
 	@apply card w-11/12;
 
-	tr {
-		@apply flex flex-col md:table-row;
-	}
-
 	td,
 	th {
 		@apply p-2 text-left;
