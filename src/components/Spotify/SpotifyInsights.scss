@@ -7,11 +7,23 @@ table tr {
 			grid-row: 1 / span 3;
 			a, .playable-album-art, img {
 				display: block;
-				width: 100%;
+				width: calc(100% - 5px);
+			}
+			.playable-album-art {
 				height: 100%;
+				position: relative;
+
+				a {
+					position: absolute;
+					top: 50%;
+					transform: translateY(-50%);
+				}
 			}
 			width: 100%;
 		}
+	}
+	@media (max-width: 420px) {
+		grid-template-columns: 1fr 1fr;
 	}
 	td {
 		@media (max-width: 768px) {
