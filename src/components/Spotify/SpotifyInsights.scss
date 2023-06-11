@@ -1,48 +1,52 @@
-table tr {
-	@media (max-width: 768px) {
-		display: grid;
-		grid-template-columns: 1fr 4fr;
+.spotify {
+	table tr {
+		@media (max-width: 768px) {
+			display: grid;
+			grid-template-columns: 1fr 4fr;
 
-		td:nth-child(1) {
-			grid-row: 1 / span 3;
-			a, .playable-album-art, img {
-				display: block;
-				width: calc(100% - 5px);
+			td:nth-child(1) {
+				grid-row: 1 / span 3;
+				a,
+				.playable-album-art,
+				img {
+					display: block;
+					width: calc(100% - 5px);
+				}
+				.playable-album-art {
+					height: 100%;
+					position: relative;
+
+					a {
+						position: absolute;
+						top: 50%;
+						transform: translateY(-50%);
+					}
+				}
+				width: 100%;
 			}
-			.playable-album-art {
-				height: 100%;
-				position: relative;
-
-				a {
-					position: absolute;
-					top: 50%;
-					transform: translateY(-50%);
+		}
+		@media (max-width: 420px) {
+			grid-template-columns: 1fr 1fr;
+		}
+		td {
+			@media (max-width: 768px) {
+				&::before {
+					font-weight: bold;
+				}
+				&:nth-child(2)::before {
+					content: 'Song: ';
+				}
+				&:nth-child(3)::before {
+					content: 'Album: ';
+				}
+				&:nth-child(4)::before {
+					content: 'Artists: ';
 				}
 			}
-			width: 100%;
 		}
 	}
-	@media (max-width: 420px) {
-		grid-template-columns: 1fr 1fr;
-	}
-	td {
-		@media (max-width: 768px) {
-			&::before {
-				font-weight: bold;
-			}
-			&:nth-child(2)::before {
-				content: 'Song: ';
-			}
-			&:nth-child(3)::before {
-				content: 'Album: ';
-			}
-			&:nth-child(4)::before {
-				content: 'Artists: ';
-			}
-		}
-	}
-}
 
-table thead {
-	@apply hidden md:table-header-group;
+	table thead {
+		@apply hidden md:table-header-group;
+	}
 }

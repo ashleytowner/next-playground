@@ -9,10 +9,10 @@ export const metadata = {
 
 export default async function SpotifyPage() {
 	return (
-		<>
+		<div className="spotify">
 			<h1>Spotify Insights</h1>
       <SpotifyAuth url={getAuthorizationURL()} />
       <SpotifyInsights client-only />
-		</>
+		</div>
 	);
 }
