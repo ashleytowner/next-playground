@@ -54,7 +54,9 @@ export default function SpotifyCallbackPage(props: unknown) {
   );
 
   useEffect(() => {
-    if (error) return;
+    if (error) {
+			localStorage.removeItem('spotify_auth');
+		}
     if (typeof localStorage === 'undefined') return;
     const tokenData = authSchema.safeParse(data);
     if (tokenData.success) {
