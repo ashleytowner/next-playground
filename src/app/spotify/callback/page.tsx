@@ -34,7 +34,7 @@ export default function SpotifyCallbackPage(props: {
         console.error(e);
       }
     }
-  }, [code, doFetch]);
+  }, [code, doFetch, router]);
 
   useEffect(() => {
     if (called && !loading && !error && data) {
