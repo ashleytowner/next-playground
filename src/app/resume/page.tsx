@@ -165,11 +165,15 @@ export default function ResumePage() {
         position="Bachelor of Computer Science"
         duration="2022"
       >
+        <p className="text-lg font-bold">Major: Cybersecurity</p>
         <p className="font-bold">Key Activities:</p>
         <ul className="pl-5 list-disc">
           <li>
             Worked both independently and within teams to strict deadlines
           </li>
+          <li>Learned and applied the principles of Agile methodologies</li>
+          <li>Designed and implemented SQL databases</li>
+          <li>Learned and applies various data structures and algorithms</li>
         </ul>
       </Experience>
       <h2>Extra-Curriculars</h2>
