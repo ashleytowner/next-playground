@@ -13,7 +13,7 @@ export default async function SpotifyPage() {
 		<div className="spotify">
 			<div>
 				<h1 className="inline mr-3">Spotify Insights</h1>
-				<div className="card bg-cyan-600 border-cyan-800 inline-flex gap-3 p-1 pl-3 pr-3">
+				<div className="card bg-cyan-400 dark:bg-cyan-600 border-cyan-600 dark:border-cyan-800 inline-flex gap-3 p-1 pl-3 pr-3">
 					<Info /> Spotify Insights is in &quot;development mode&quot; and as
 					such, may not allow you to sign in properly
 				</div>

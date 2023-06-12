@@ -20,12 +20,12 @@ export default function Home() {
 				projects, or reach out to me, use the links below:
 			</p>
 			<div className="flex">
-				<Link href="https://github.com/ashleytowner">
+				<Link href="https://github.com/ashleytowner" target="_blank">
 					<button className="btn flex gap-2">
 						<Github /> GitHub
 					</button>
 				</Link>
-				<Link href="https://www.linkedin.com/in/ashley-towner/">
+				<Link href="https://www.linkedin.com/in/ashley-towner/" target="_blank">
 					<button className="btn flex gap-2">
 						<Linkedin /> Linkedin
 					</button>

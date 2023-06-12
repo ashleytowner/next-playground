@@ -1,3 +1,4 @@
+'use client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 type PaginationProps = {
@@ -13,9 +14,8 @@ export default function Pagination(props: PaginationProps) {
   };
 
   const handleNext = () => {
-    props.onChange &&
-      props.onChange(props.limit, props.skip + props.limit);
-  }
+    props.onChange && props.onChange(props.limit, props.skip + props.limit);
+  };
 
   const pageNum = Math.ceil(props.skip / props.limit) + 1;
 

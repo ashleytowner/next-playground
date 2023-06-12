@@ -1,3 +1,4 @@
+'use client';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import './Accordion.scss';
 import { ReactNode, SyntheticEvent } from 'react';
@@ -7,7 +8,7 @@ type AccordionProps = {
   title: string;
   level?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   onToggle?: (open: boolean) => void;
-  startOpen?: boolean
+  startOpen?: boolean;
 };
 
 function Heading(props: Omit<AccordionProps, 'title'>) {
@@ -37,7 +38,7 @@ export default function Accordion(props: AccordionProps) {
     } else {
       onToggle?.(false);
     }
-  }
+  };
   return (
     <details className="accordion" onToggle={handleToggle} open={startOpen}>
       <summary>

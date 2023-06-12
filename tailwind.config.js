@@ -15,10 +15,10 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        primary: colors.indigo,
-        secondary: colors.cyan,
-        tertiary: colors.emerald,
-        shade: '#00000080'
+        primary: colors.violet,
+        secondary: colors.indigo,
+        shade: '#00000080',
+        material: colors.zinc
       },
       gridTemplateColumns: {
         '2/4/4/4/1': '2fr 4fr 4fr 4fr 1fr',

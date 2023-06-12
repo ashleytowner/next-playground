@@ -27,10 +27,11 @@ const NavLink = (props: { route: string; label: string }) => {
 
 export default function NavBar() {
 	return (
-		<nav className="bg-slate-50 pl-4 dark:bg-slate-900 flex flex-row gap-3 shadow-slate-400 dark:shadow-slate-950 shadow">
+		<nav className="bg-material-50 pl-4 dark:bg-material-900 flex flex-row gap-3 shadow-material-400 dark:shadow-material-950 shadow">
 			<NavLink route="/" label="Home" />
 			<NavLink route="/elo" label="Elo Calculator" />
 			<NavLink route="/spotify" label="Spotify Insights" />
+			<NavLink route="/components" label="Components" />
 		</nav>
 	);
 }
