@@ -91,6 +91,14 @@
 			dark:border-material-600 border-2 shadow;
 	}
 
+	.eyebrow {
+		@apply text-secondary-400 font-bold;
+	}
+
+	.badge {
+			@apply pt-1 pb-1 pl-4 pr-4 m-1 rounded-full inline-flex;
+	}
+
 	.btn-base {
 		@apply shadow pt-2 pb-2 pl-4 pr-4 rounded-md m-1;
 	}

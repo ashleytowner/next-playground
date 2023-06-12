@@ -29,6 +29,7 @@ export default function NavBar() {
 	return (
 		<nav className="bg-material-50 pl-4 dark:bg-material-900 flex flex-row gap-3 shadow-material-400 dark:shadow-material-950 shadow">
 			<NavLink route="/" label="Home" />
+			<NavLink route="/resume" label="Resume" />
 			<NavLink route="/elo" label="Elo Calculator" />
 			<NavLink route="/spotify" label="Spotify Insights" />
 			<NavLink route="/components" label="Components" />

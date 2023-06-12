@@ -2,7 +2,6 @@ import Button from '@/components/Button/Button';
 import { Github, Linkedin } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export const metadata: Metadata = {
 	title: 'Ashley Towner',
@@ -19,7 +18,7 @@ export default function Home() {
 				to fulfil any specific purpose. If you want to view my more well-defined
 				projects, or reach out to me, use the links below:
 			</p>
-			<div className="flex">
+			<div className="flex justify-around w-1/2">
 				<Link href="https://github.com/ashleytowner" target="_blank">
 					<button className="btn flex gap-2">
 						<Github /> GitHub
