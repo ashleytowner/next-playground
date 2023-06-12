@@ -16,7 +16,10 @@ export default function SpotifyCallbackPage(props: {
   const { data, loading, error, called, doFetch } = useLazyFetch(authSchema);
 
   useEffect(() => {
-    if (!code) return;
+    if (!code) {
+      localStorage.removeItem('sfy_access_token');
+      router.replace('/spotify');
+    }
     try {
       doFetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/spotify/authorize`, {
         method: 'POST',

@@ -8,6 +8,7 @@ import RecommendationsForm, {
   RecommendationsFormValues,
 } from './RecommendationsForm';
 import useLazyFetch from '@/hooks/useLazyFetch';
+import Link from 'next/link';
 
 const schema = z.object({ tracks: z.array(spotifyTrack) });
 
@@ -55,8 +56,14 @@ export default function Recommendations({ auth }: RecommendationsProps) {
     <>
       <RecommendationsForm onSubmit={handleChange} />
       {loading && !recommendations && <p>Loading...</p>}
-      {error && <p>There was an error fetching your data</p>}
-      {(called || !loading) && !error &&
+      {error && (
+        <p>
+          There was an error fetching your data{' '}
+          <Link href="/spotify/callback">Try Again</Link>
+        </p>
+      )}
+      {(called || !loading) &&
+        !error &&
         recommendations?.tracks.map((track) => (
           <SongCard key={track.id} type="track" track={track} />
         ))}

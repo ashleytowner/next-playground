@@ -1,13 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { authSchemaWithExpiry, spotifyArtist, spotifyTrack } from '@/lib/zod/spotify';
+import {
+	authSchemaWithExpiry,
+	spotifyArtist,
+	spotifyTrack,
+} from '@/lib/zod/spotify';
 import { z } from 'zod';
 import { useEffect, useMemo } from 'react';
 import SongCard from './SongCard';
 import Pagination from '../Pagination/Pagination';
 import usePagination from '@/hooks/usePagination';
 import useLazyFetch from '@/hooks/useLazyFetch';
+import Link from 'next/link';
 
 const schema = z.object({ items: z.array(spotifyTrack.or(spotifyArtist)) });
 
@@ -27,12 +32,7 @@ export default function SpotifyTop({ auth, type }: TopTracksProps) {
 		};
 	}, [auth]);
 
-	const {
-		data: topEntities,
-		error,
-		doFetch,
-		called,
-	} = useLazyFetch(schema);
+	const { data: topEntities, error, doFetch, called } = useLazyFetch(schema);
 
 	useEffect(() => {
 		doFetch(
@@ -46,7 +46,12 @@ export default function SpotifyTop({ auth, type }: TopTracksProps) {
 	}
 
 	if (typeof topEntities === 'undefined' || error) {
-		return <p>There was an error fetching your data</p>;
+		return (
+			<p>
+				There was an error fetching your data{' '}
+				<Link href="/spotify/callback">Try Again</Link>
+			</p>
+		);
 	}
 
 	return (
@@ -57,8 +62,8 @@ export default function SpotifyTop({ auth, type }: TopTracksProps) {
 					<SongCard
 						key={entity.id}
 						type={cardType}
-						track={cardType === 'track' ? entity as any : undefined}
-						artist={cardType === 'artist' ? entity as any : undefined}
+						track={cardType === 'track' ? (entity as any) : undefined}
+						artist={cardType === 'artist' ? (entity as any) : undefined}
 					/>
 				);
 			})}
