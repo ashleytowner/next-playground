@@ -1,11 +1,10 @@
 'use client';
 import { authSchemaWithExpiry } from '@/lib/zod/spotify';
 import Recommendations from './Recommendations';
-import TopTracks from './TopTracks';
+import SpotifyTop from './TopTracks';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import Tabs from '../Tabs/Tabs';
-import TopArtists from './TopArtists';
 import { getToken } from '@/lib/spotify';
 
 export default function SpotifyInsights() {
@@ -25,11 +24,11 @@ export default function SpotifyInsights() {
 	const tabs = [
 		{
 			label: 'Top Tracks',
-			content: <TopTracks auth={authData} />,
+			content: <SpotifyTop key="toptracks" type={'tracks'} auth={authData} />,
 		},
 		{
 			label: 'Top Artists',
-			content: <TopArtists auth={authData} />,
+			content: <SpotifyTop key="topartists" type="artists" auth={authData} />,
 		},
 		{
 			label: 'Recommendations',

@@ -1,6 +1,5 @@
 'use client';
 import { authSchemaWithExpiry } from '@/lib/zod/spotify';
-import Button from '../Button/Button';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
