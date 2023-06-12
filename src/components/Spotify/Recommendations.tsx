@@ -61,7 +61,7 @@ export default function Recommendations({ auth }: RecommendationsProps) {
       {error && <p>There was an error fetching your data</p>}
       {(called || !loading) && !error &&
         recommendations?.tracks.map((track) => (
-          <SongCard key={track.id} track={track} />
+          <SongCard key={track.id} type="track" track={track} />
         ))}
     </>
   );

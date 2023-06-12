@@ -2,18 +2,18 @@
 'use client';
 
 import useFetch from '@/hooks/useFetch';
-import { authSchemaWithExpiry, spotifyTrack } from '@/lib/zod/spotify';
+import { authSchemaWithExpiry, spotifyArtist } from '@/lib/zod/spotify';
 import { z } from 'zod';
 import { useMemo } from 'react';
 import SongCard from './SongCard';
 
-const schema = z.object({ items: z.array(spotifyTrack) });
+const schema = z.object({ items: z.array(spotifyArtist) });
 
-type TopTracksProps = {
+type TopArtistsProps = {
 	auth: z.infer<typeof authSchemaWithExpiry>;
 }
 
-export default function TopTracks({ auth }: TopTracksProps) {
+export default function TopArtists({ auth }: TopArtistsProps) {
 	const requestData = useMemo(() => {
 		return {
 			headers: {
@@ -21,9 +21,9 @@ export default function TopTracks({ auth }: TopTracksProps) {
 			},
 		};
 	}, [auth]);
-	const { loading, data: topTracks, error } = useFetch(
+	const { loading, data: topArtists, error } = useFetch(
 		schema,
-		'https://api.spotify.com/v1/me/top/tracks',
+		'https://api.spotify.com/v1/me/top/artists',
 		requestData
 	);
 
@@ -31,14 +31,14 @@ export default function TopTracks({ auth }: TopTracksProps) {
 		return <p>Loading...</p>;
 	}
 
-	if (typeof topTracks === 'undefined' || error) {
+	if (typeof topArtists === 'undefined' || error) {
 		return <p>There was an error fetching your data</p>;
 	}
 
 	return (
     <>
-      {topTracks.items.map(track => {
-        return <SongCard type="track" key={track.id} track={track} />
+      {topArtists.items.map(artist => {
+				return <SongCard key={artist.id} type="artist" artist={artist} />
       })}
     </>
 	);

@@ -26,6 +26,9 @@ export const spotifyArtist = z.object({
   name: z.string(),
   type: z.string(),
   uri: z.string(),
+  genres: z.array(z.string()).optional(),
+  images: z.array(spotifyImage).optional(),
+  popularity: z.number().optional()
 });
 
 export const spotifyAlbum = z.object({
