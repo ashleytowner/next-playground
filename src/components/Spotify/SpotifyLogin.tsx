@@ -42,9 +42,9 @@ export default function SpotifyAuth({ url }: SpotifyAuthProps) {
 	return (
 		<>
 			{!Boolean(authData) && (
-				<Button variant="primary" onClick={handleClick}>
+				<button className="btn-primary" onClick={handleClick}>
 					Sign In With Spotify
-				</Button>
+				</button>
 			)}
 		</>
 	);

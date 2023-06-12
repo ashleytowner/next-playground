@@ -285,7 +285,7 @@ export default function RecommendationsForm({
           ))}
         </select>
       </fieldset>
-      <input type="submit" className="m-auto block" value="Get Recommendations" />
+      <input type="submit" className="m-auto block btn" value="Get Recommendations" />
     </form>
   );
 }

@@ -20,7 +20,7 @@
 		@apply dark:bg-slate-800 dark:text-slate-100 bg-slate-100 text-slate-800;
 	}
 
-	input:not([type='checkbox']):not([type='radio']):not([type='range']),
+	input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='submit']),
 	select {
 		@apply card;
 	}
@@ -87,10 +87,13 @@
 			dark:border-slate-600 border-2 shadow;
 	}
 
+	.btn-base {
+		@apply shadow pt-2 pb-2 pl-4 pr-4 rounded-md m-1;
+	}
+
 	.btn {
-		@apply bg-zinc-800 hover:bg-slate-700 active:bg-slate-900 text-zinc-100
-			dark:bg-zinc-200 dark:hover:bg-slate-300 dark:active:bg-slate-100 dark:text-zinc-800
-	shadow pt-2 pb-2 pl-4 pr-4 rounded-md m-1;
+		@apply btn-base bg-zinc-800 hover:bg-slate-700 active:bg-slate-900 text-zinc-100
+			dark:bg-zinc-200 dark:hover:bg-slate-300 dark:active:bg-slate-100 dark:text-zinc-800;
 	}
 
 	.btn-primary {
@@ -105,19 +108,21 @@
 	}
 
 	.btn-destructive {
-			@apply btn bg-red-500 hover:bg-red-400 active:bg-red-600 text-zinc-100
+		@apply btn bg-red-500 hover:bg-red-400 active:bg-red-600 text-zinc-100
 			dark:hover:bg-red-600 dark:active:bg-red-400;
 	}
 
-	.btn-outline {
-		@apply btn bg-transparent text-zinc-800 border border-zinc-300
-			dark:border-zinc-700
-			hover:bg-zinc-200 active:bg-slate-300 dark:text-zinc-100
-			dark:hover:bg-zinc-700 dark:active:bg-zinc-600;
+	.btn-ghost {
+		@apply btn-base shadow-none bg-black bg-opacity-0 hover:bg-opacity-10
+			dark:hover:bg-opacity-20;
+
+		&.btn-active {
+				@apply bg-opacity-10 dark:bg-opacity-20;
+		}
 	}
 
-	.btn-ghost {
-		@apply btn-outline border-0 shadow-none;
+	.btn-outline {
+		@apply btn-ghost border dark:border-zinc-600;
 	}
 
 }
