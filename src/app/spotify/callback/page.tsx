@@ -19,6 +19,7 @@ export default function SpotifyCallbackPage(props: {
     if (!code) {
       localStorage.removeItem('sfy_access_token');
       router.replace('/spotify');
+      return;
     }
     try {
       doFetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/spotify/authorize`, {

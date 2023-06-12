@@ -6,32 +6,43 @@ import { useRouter } from 'next/navigation';
 import { getToken } from '@/lib/spotify';
 
 type SpotifyAuthProps = {
-	url: string;
+  url: string;
 };
 
 export default function SpotifyAuth({ url }: SpotifyAuthProps) {
-	const [authData, setAuthData] =
-		useState<z.infer<typeof authSchemaWithExpiry>>();
+  const [authData, setAuthData] =
+    useState<z.infer<typeof authSchemaWithExpiry>>();
 
-	const router = useRouter();
+  const router = useRouter();
 
-	useEffect(() => {
+  useEffect(() => {
     getToken().then((token) => {
       setAuthData(token);
-    })
-	}, [setAuthData]);
+    });
+  }, [setAuthData]);
 
-	const handleClick = () => {
-		router.push(url);
-	};
+  const handleClick = () => {
+    router.push(url);
+  };
 
-	return (
-		<>
-			{!Boolean(authData) && (
-				<button className="btn-primary" onClick={handleClick}>
-					Sign In With Spotify
-				</button>
-			)}
-		</>
-	);
+  return (
+    <>
+      {!Boolean(authData) && (
+        <button className="btn-primary" onClick={handleClick}>
+          Sign In With Spotify
+        </button>
+      )}
+      {Boolean(authData) && (
+        <button
+          className="btn"
+          onClick={() => {
+            localStorage.removeItem('sfy_access_token');
+            router.replace('/');
+          }}
+        >
+          Disconnect Spotify Account
+        </button>
+      )}
+    </>
+  );
 }
