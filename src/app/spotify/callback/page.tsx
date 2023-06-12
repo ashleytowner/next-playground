@@ -1,85 +1,55 @@
 'use client';
 import useFetch from '@/hooks/useFetch';
+import useLazyFetch from '@/hooks/useLazyFetch';
 import { authSchema, authSchemaWithExpiry } from '@/lib/zod/spotify';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo } from 'react';
-import { z } from 'zod';
+import { useEffect } from 'react';
 
-function calculateExpiry(inSeconds: number) {
-  return Date.now() + inSeconds * 1000;
-}
-
-export default function SpotifyCallbackPage(props: unknown) {
-  const schema = z.object({
-    searchParams: z.object({
-      code: z.string().optional(),
-    }),
-  });
-  const { searchParams } = schema.parse(props);
-  const { code } = searchParams;
+export default function SpotifyCallbackPage(props: {
+  searchParams: { code: string };
+}) {
+  const { code } = props.searchParams;
 
   const router = useRouter();
 
-  const requestData = useMemo(() => {
-    if (code) {
-      return {
+  const { data, loading, error, called, doFetch } = useLazyFetch(authSchema);
+
+  useEffect(() => {
+    if (!code) return;
+    try {
+      doFetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/spotify/authorize`, {
         method: 'POST',
         body: JSON.stringify({
           code,
         }),
-      };
-    } else {
-      const storageItem =
-        typeof localStorage !== 'undefined'
-          ? localStorage.getItem('spotify_auth')
-          : null;
-
-      if (!storageItem) return undefined;
-      const data = authSchemaWithExpiry.safeParse(JSON.stringify(storageItem));
-      if (!data.success) return undefined;
-      return {
-        method: 'POST',
-        body: JSON.stringify({
-          refresh_token: data.data.refresh_token,
-        }),
-      };
+      });
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error(e.message);
+      } else {
+        console.error(e);
+      }
     }
-  }, [code]);
-
-  const { data, loading, error } = useFetch(
-    undefined,
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/spotify/authorize`,
-    requestData
-  );
+  }, [code, doFetch]);
 
   useEffect(() => {
-    if (error) {
-			localStorage.removeItem('spotify_auth');
-		}
-    if (typeof localStorage === 'undefined') return;
-    const tokenData = authSchema.safeParse(data);
-    if (tokenData.success) {
+    if (called && !loading && !error && data) {
       localStorage.setItem(
-        'spotify_auth',
-        JSON.stringify({
-          ...tokenData.data,
-          exp: calculateExpiry(tokenData.data.expires_in),
-        })
+        'sfy_access_token',
+        JSON.stringify({ ...data, exp: data.expires_in * 1000 + Date.now() })
       );
-    } else {
-      localStorage.removeItem('spotify_auth');
+      router.replace('/spotify');
     }
-  }, [data, error]);
-
-  useEffect(() => {
-    if (!loading && Boolean(data) && !error) {
-      router.push('/spotify');
-    }
-  }, [loading, data, error, router]);
+  });
 
   return (
     <>
+      <p>loading {String(loading)}</p>
+      <p>data {String(data)}</p>
+      <p>error {String(error)}</p>
+      <p>called {String(called)}</p>
+      <p>code {String(code)}</p>
       {loading && <p>Loading...</p>}
       {!loading && Boolean(data) && !error && (
         <h1 className="dark:text-green-200 text-green-800">

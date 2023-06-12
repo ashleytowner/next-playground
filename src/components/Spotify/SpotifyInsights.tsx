@@ -4,29 +4,23 @@ import Recommendations from './Recommendations';
 import TopTracks from './TopTracks';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import Accordion from '../Accordion/Accordion';
 import Tabs from '../Tabs/Tabs';
 import TopArtists from './TopArtists';
+import { getToken } from '@/lib/spotify';
 
 export default function SpotifyInsights() {
 	const [authData, setAuthData] =
 		useState<z.infer<typeof authSchemaWithExpiry>>();
 
 	useEffect(() => {
-		const storageItem =
-			typeof localStorage !== 'undefined'
-				? localStorage.getItem('spotify_auth')
-				: null;
-		if (storageItem) {
-			try {
-				setAuthData(authSchemaWithExpiry.parse(JSON.parse(storageItem)));
-			} catch {
-				setAuthData(undefined);
-			}
-		}
+		getToken().then((token) => {
+			setAuthData(token);
+		});
 	}, [setAuthData]);
 
-	if (!authData) return null;
+	if (!authData) {
+		return null;
+	}
 
 	const tabs = [
 		{
@@ -35,7 +29,7 @@ export default function SpotifyInsights() {
 		},
 		{
 			label: 'Top Artists',
-			content: <TopArtists auth={authData} />
+			content: <TopArtists auth={authData} />,
 		},
 		{
 			label: 'Recommendations',

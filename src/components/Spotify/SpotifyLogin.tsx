@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
+import { getToken } from '@/lib/spotify';
 
 type SpotifyAuthProps = {
 	url: string;
@@ -16,24 +17,10 @@ export default function SpotifyAuth({ url }: SpotifyAuthProps) {
 	const router = useRouter();
 
 	useEffect(() => {
-		const storageItem =
-			typeof localStorage !== 'undefined'
-				? localStorage.getItem('spotify_auth')
-				: null;
-		if (storageItem) {
-			try {
-				setAuthData(authSchemaWithExpiry.parse(JSON.parse(storageItem)));
-			} catch {
-				setAuthData(undefined);
-			}
-		}
+    getToken().then((token) => {
+      setAuthData(token);
+    })
 	}, [setAuthData]);
-
-	useEffect(() => {
-		if (authData && authData.exp < Date.now()) {
-			router.push('/spotify/callback');
-		}
-	}, [authData, router]);
 
 	const handleClick = () => {
 		router.push(url);

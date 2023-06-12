@@ -1,4 +1,6 @@
 import querystring from 'querystring';
+import { authSchema, authSchemaWithExpiry } from './zod/spotify';
+import { ZodError } from 'zod';
 
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
@@ -62,7 +64,7 @@ export async function getRefreshToken(code: string) {
     body: querystring.stringify({
       grant_type: 'authorization_code',
       code,
-      redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/spotify/callback`
+      redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/spotify/callback`,
     }),
   });
 
@@ -83,4 +85,47 @@ export async function refresh(refreshToken: string) {
   });
 
   return [response.status, await response.json()] as const;
+}
+
+export async function getToken() {
+  if (localStorage) {
+    const authData = localStorage.getItem('sfy_access_token');
+    if (authData === null) {
+      return undefined;
+    }
+    try {
+      const parsedAuthData = authSchemaWithExpiry.parse(JSON.parse(authData));
+
+      if (parsedAuthData.exp < Date.now()) {
+        const [status, newAuthData] = await refresh(
+          parsedAuthData.refresh_token
+        );
+        if (status >= 200 && status < 300) {
+          const newParsedAuthData = authSchema.parse(newAuthData);
+          const authDataWithExp = {
+            ...newParsedAuthData,
+            exp: newParsedAuthData.expires_in * 1000 + Date.now()
+          }
+          localStorage.setItem(
+            'sfy_access_token',
+            JSON.stringify(newParsedAuthData)
+          );
+          return authDataWithExp;
+        } else {
+          return undefined;
+        }
+      } else {
+        return parsedAuthData;
+      }
+    } catch (e) {
+      if (e instanceof ZodError) {
+        console.error(e.errors);
+      } else if (e instanceof Error) {
+        console.error(e.message);
+      } else {
+        console.error(e);
+      }
+      return undefined;
+    }
+  }
 }
