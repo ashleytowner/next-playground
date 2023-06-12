@@ -2,6 +2,10 @@ import { Github, Linkedin } from 'lucide-react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
+export const metadata = {
+	title: 'Ashley Towner\'s Resume'
+}
+
 function Experience(props: {
   company: string;
   position: string;
