@@ -42,8 +42,6 @@ export default function Recommendations({ auth }: RecommendationsProps) {
     doFetch,
   } = useLazyFetch(schema);
 
-  console.log('Rendered');
-
   useEffect(() => {
     if (!query) return;
     doFetch(`https://api.spotify.com/v1/recommendations?${query}`, requestData);
@@ -51,7 +49,6 @@ export default function Recommendations({ auth }: RecommendationsProps) {
 
   const handleChange = (e: RecommendationsFormValues) => {
     setSettings(e);
-    console.log(e);
   };
 
   return (
