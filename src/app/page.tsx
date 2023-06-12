@@ -1,5 +1,5 @@
 import Button from '@/components/Button/Button';
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, ScrollText } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -22,6 +22,11 @@ export default function Home() {
 				<Link href="https://github.com/ashleytowner" target="_blank">
 					<button className="btn flex gap-2">
 						<Github /> GitHub
+					</button>
+				</Link>
+				<Link href="/resume">
+					<button className="btn flex gap-2">
+						<ScrollText /> Resume
 					</button>
 				</Link>
 				<Link href="https://www.linkedin.com/in/ashley-towner/" target="_blank">
