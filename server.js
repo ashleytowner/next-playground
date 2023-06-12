@@ -2,6 +2,7 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const next = require('next');
+require('dotenv').config();
 
 const dev = process.env.NODE_ENV !== 'production';
 
