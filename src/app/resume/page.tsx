@@ -162,7 +162,7 @@ export default function ResumePage() {
       <h2>Education</h2>
       <Experience
         company="Adelaide University"
-        position="Bachelor of Science in Computer Science"
+        position="Bachelor of Computer Science"
         duration="2022"
       >
         <p className="font-bold">Key Activities:</p>
