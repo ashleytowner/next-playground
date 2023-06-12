@@ -5,6 +5,7 @@
 @layer base {
 	* {
 		box-sizing: border-box;
+		transition: background-color 150ms ease-in-out, color 100ms ease-in-out;
 	}
 
 	a {
@@ -85,4 +86,38 @@
 		@apply bg-slate-200 dark:bg-slate-700 p-2 rounded border-slate-300
 			dark:border-slate-600 border-2 shadow;
 	}
+
+	.btn {
+		@apply bg-zinc-800 hover:bg-slate-700 active:bg-slate-900 text-zinc-100
+			dark:bg-zinc-200 dark:hover:bg-slate-300 dark:active:bg-slate-100 dark:text-zinc-800
+	shadow pt-2 pb-2 pl-4 pr-4 rounded-md m-1;
+	}
+
+	.btn-primary {
+		@apply btn bg-primary-700 hover:bg-primary-600 active:bg-primary-800
+			dark:bg-primary-400 dark:hover:bg-primary-500 dark:active:bg-primary-300
+			dark:text-zinc-100;
+	}
+
+	.btn-secondary {
+		@apply btn bg-zinc-300 hover:bg-slate-200 active:bg-slate-400 text-zinc-800
+			dark:bg-zinc-700 dark:hover:bg-zinc-800 dark:active:bg-zinc-600 dark:text-zinc-200;
+	}
+
+	.btn-destructive {
+			@apply btn bg-red-500 hover:bg-red-400 active:bg-red-600 text-zinc-100
+			dark:hover:bg-red-600 dark:active:bg-red-400;
+	}
+
+	.btn-outline {
+		@apply btn bg-transparent text-zinc-800 border border-zinc-300
+			dark:border-zinc-700
+			hover:bg-zinc-200 active:bg-slate-300 dark:text-zinc-100
+			dark:hover:bg-zinc-700 dark:active:bg-zinc-600;
+	}
+
+	.btn-ghost {
+		@apply btn-outline border-0 shadow-none;
+	}
+
 }

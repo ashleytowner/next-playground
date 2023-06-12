@@ -202,7 +202,7 @@ export default function RecommendationsForm({
           max={1}
           step={0.01}
         />
-        <label htmlFor="energy">Enenergy</label>
+        <label htmlFor="energy">Energy</label>
         <input
           type="range"
           id="energy"
