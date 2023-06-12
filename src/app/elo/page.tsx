@@ -10,6 +10,7 @@ export default function Form() {
 	return (
 		<>
 			<h1>Elo Calculator</h1>
+			<p>Enter your elo rating and your opponent&apos;s elo rating to calculate your chance of winning, and your elo gain</p>
 			<EloCalculator />
 		</>
 	);

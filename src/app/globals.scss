@@ -16,6 +16,10 @@
 		}
 	}
 
+	p {
+		@apply mt-2 mb-2;
+	}
+
 	body {
 		@apply dark:bg-slate-800 dark:text-slate-100 bg-slate-100 text-slate-800;
 	}
